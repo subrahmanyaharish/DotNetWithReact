@@ -6,7 +6,12 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import AboutPage from "../../features/about/AboutPage";
 import Catalog from "../../features/catalog/Catalog";
+import ProductDetailsPage from "../../features/catalog/ProductDetails";
+import ContactPage from "../../features/contact/ContactPage";
+import HomePage from "../../features/home/HomePage";
 import Header from "./Header";
 
 function App() {
@@ -17,9 +22,9 @@ function App() {
   const theme = createTheme({
     palette: {
       mode: paletteType,
-      background:{
-        default: paletteType==='light' ? '#eaeaea' : '#121212'
-      }
+      background: {
+        default: paletteType === "light" ? "#eaeaea" : "#121212",
+      },
     },
   });
 
@@ -33,7 +38,14 @@ function App() {
         <CssBaseline />
         <Header darkMode={darkMode} handleThemeChange={handleThemeChange} />
         <Container>
-          <Catalog />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/catalog" element={<Catalog />} />
+            <Route path="/catalog/:id" element={<ProductDetailsPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            {/* <Route path="*" element={<HomePage />} /> */}
+          </Routes>
         </Container>
       </ThemeProvider>
     </>

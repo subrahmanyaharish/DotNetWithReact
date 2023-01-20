@@ -38,10 +38,21 @@ namespace API.Controllers
         }
 
         [HttpPost(Name = "AddProduct")]
-        public async Task<ActionResult> AddProduct(Product product)
+        public async Task<ActionResult> AddProduct([FromBody]Product product)
         {
             if (!ModelState.IsValid) return BadRequest();
             await _storeContext.Products.AddAsync(product);
+            await _storeContext.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> RemoveProduct(int id)
+        {
+            if(id < 0 ) return BadRequest();
+            var product = await _storeContext.Products.FirstOrDefaultAsync(p => p.Id == id);
+            if (product == null) return BadRequest();
+            _storeContext.Products.Remove(product);
             await _storeContext.SaveChangesAsync();
             return Ok();
         }

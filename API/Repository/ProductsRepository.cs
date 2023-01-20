@@ -11,5 +11,12 @@ namespace API.Repository
         {
             this.storeContext = storeContext;
         }
+
+        public async Task<Product> UpdateProductAsync(Product product)
+        {
+            this.storeContext.Products.Update(product);
+            await this.storeContext.SaveChangesAsync();
+            return product;
+        }
     }
 }
